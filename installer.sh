@@ -2,33 +2,7 @@
 
 cat << "EOF"
 +--------------------------------------------------------------------+
-|                     ,---._            ____                         |
-|                   .-- -.' \         ,'  , `.                       |
-|        ,---,      |    |   :     ,-+-,.' _ |                       |
-|       /_ ./|      :    ;   |  ,-+-. ;   , ||                       |
-| ,---, |  ' :      :        | ,--.'|'   |  ;|                       |
-|/___/ \.  : |      |    :   :|   |  ,', |  ':                       |
-| .  \  \ ,' '      :         |   | /  | |  ||                       |
-|  \  ;  `  ,'      |    ;   |'   | :  | :  |,                       |
-|   \  \    '   ___ l         ;   . |  ; |--'                        |
-|    '  \   | /    /\    J   :|   : |  | ,                           |
-|     \  ;  ;/  ../  `..-    ,|   : '  |/                            |
-|      :  \  \    \         ; ;   | |`-'                             |
-|       \  ' ;\    \      ,'  |   ;/                                 |
-|        `--`  "---....--'    '---'                                  |
-|   ,---,                         ___                 ,--,    ,--,   |
-|,`--.' |                       ,--.'|_             ,--.'|  ,--.'|   |
-||   :  :      ,---,            |  | :,'            |  | :  |  | :   |
-|:   |  '  ,-+-. /  | .--.--.   :  : ' :            :  : '  :  : '   |
-||   :  | ,--.'|'   |/  /    '.;__,'  /    ,--.--.  |  ' |  |  ' |   |
-|'   '  ;|   |  ,"' |  :  /`./|  |   |    /       \ '  | |  '  | |   |
-||   |  ||   | /  | |  :  ;_  :__,'| :   .--.  .-. ||  | :  |  | :   |
-|'   :  ;|   | |  | |\  \    `. '  : |__  \__\/ : . .'  : |__'  : |__|
-||   |  '|   | |  |/  `----.   \|  | '.'| ," .--.; ||  | '.'|  | '.'|| 
-|'   :  ||   | |--'  /  /`--'  /;  :    ;/  /  ,.  |;  :    ;  :    ;|
-|;   |.' |   |/     '--'.     / |  ,   /;  :   .'   \  ,   /|  ,   / |
-|'---'   '---'        `--'---'   ---`-' |  ,     .-./---`-'  ---`-'  |
-|                                        `--`---'                    |
+|                    Welcome to YJM Installer                        |
 +--------------------------------------------------------------------+
 EOF
 
@@ -37,70 +11,34 @@ echo "1. Server Install"
 echo "2. Rocket Chat install"
 echo "3. Reverse Proxy install"
 echo "4. Nextcloud install"
-echo "5. Virtuell Box"
-echo "6. Isos"
+echo "5. VirtualBox"
+echo "6. ISOs"
 echo "7. Webmin"
 
 read -p "Enter your choice (1-7): " choice
 
-if [ "$choice" -eq 1 ]; then
-    echo "Downloading and executing the server install script..."
-    wget -O server.sh http://source.yjmhub.net/server.sh
-    sudo chmod +x server.sh
-    sudo dos2unix server.sh
-    sudo ./server.sh
-fi
+# Funktion zum Herunterladen und Ausführen eines Skripts
+install_script() {
+    local script_name=$1
+    local script_url="https://raw.githubusercontent.com/YJM-Network/YJM/main/$script_name"
 
+    echo "Downloading and executing $script_name..."
+    if wget -q -O "$script_name" "$script_url"; then
+        sudo chmod +x "$script_name"
+        sudo dos2unix "$script_name"
+        sudo ./"$script_name"
+    else
+        echo "Error: Failed to download $script_name. Please check your internet connection or the URL."
+    fi
+}
 
-if [ "$choice" -eq 2 ]; then
-    echo "Downloading and executing the Rocket-Chat script..."
-    wget -O r.sh http://source.yjmhub.net/r.sh
-    sudo chmod +x r.sh
-    sudo dos2unix r.sh
-    sudo ./r.sh
-fi
-
-if [ "$choice" -eq 3 ]; then
-    echo "Downloading and executing the Proxy install script..."
-    wget -O proxy.sh http://source.yjmhub.net/proxy.sh
-    sudo chmod +x proxy.sh
-    sudo dos2unix proxy.sh
-    sudo ./proxy.sh
-fi
-
-if [ "$choice" -eq 4 ]; then
-    echo "Downloading and executing the Nextcloud script..."
-    wget -O cloud.sh http://source.yjmhub.net/cloud.sh
-    sudo chmod +x cloud.sh
-    sudo dos2unix cloud.sh
-    sudo ./cloud.sh
-fi
-
-
-if [ "$choice" -eq 5 ]; then
-    echo "Downloading and executing the Rocket-Chat script..."
-    wget -O vm.sh http://source.yjmhub.net/vm.sh
-    sudo chmod +x vm.sh
-    sudo dos2unix vm.sh
-    sudo ./vm.sh
-fi
-
-if [ "$choice" -eq 6 ]; then
-    echo "Downloading and executing the Rocket-Chat script..."
-    wget -O iso.sh http://source.yjmhub.net/iso.sh
-    sudo chmod +x iso.sh
-    sudo dos2unix iso.sh
-    sudo ./iso.sh
-fi
-
-if [ "$choice" -eq 7 ]; then
-    echo "Downloading and executing the Webmin script..."
-    wget -O webmin.sh http://source.yjmhub.net/webmin.sh
-    sudo chmod +x webmin.sh
-    sudo dos2unix webmin.sh
-    sudo ./webmin.sh
-fi
-
-
-
-
+case "$choice" in
+    1) install_script "server.sh" ;;
+    2) install_script "r.sh" ;;
+    3) install_script "proxy.sh" ;;
+    4) install_script "cloud.sh" ;;
+    5) install_script "vm.sh" ;;
+    6) install_script "iso.sh" ;;
+    7) install_script "webmin.sh" ;;
+    *) echo "Invalid choice. Please enter a number between 1 and 7." ;;
+esac
