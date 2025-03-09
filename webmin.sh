@@ -7,13 +7,13 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Webmin-Setup-Skript herunterladen
-sudo curl -o webmin-setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repos.sh
+sudo curl -o webmin-setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repos.sh -y
 
 # Setup-Skript ausführen
-sudo sh webmin-setup-repos.sh
+sudo sh webmin-setup-repos.sh -y
 
 # Webmin installieren
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install webmin --install-recommends -y
 
 echo "Webmin-Installation abgeschlossen!"
