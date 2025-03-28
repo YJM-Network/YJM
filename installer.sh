@@ -9,9 +9,9 @@ EOF
 echo "What do you want to install?"
 echo "1. Server Install"
 echo "2. Docker Images"
-echo "7. Webmin"
+echo "3. Webmin"
 
-read -p "Enter your choice (1-7): " choice
+read -p "Enter your choice (1-3): " choice
 
 # Funktion zum Herunterladen und Ausführen eines Skripts
 install_script() {
@@ -31,6 +31,7 @@ install_script() {
 case "$choice" in
     1) install_script "server.sh" ;;
     2) install_script "docker.sh";;
+    2) install_script "webmin.sh";;
 
     *) echo "Invalid choice. Please enter a number between 1 and 7." ;;
 esac
