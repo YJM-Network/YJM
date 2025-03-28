@@ -15,7 +15,7 @@ echo "1) Apache2"
 echo "2) Samba"
 echo "3) Ubuntu Desktop"
 echo "4) MariaDB Server & Client"
-echo "5) Docker & Docker-Compose"
+echo "5) Nicht Belegt"
 echo "6) Alle installieren"
 echo "7) Beenden"
 read -p "Ihre Auswahl (Mehrfachauswahl mit Leerzeichen, z.B. 1 3 5): " choices
@@ -44,10 +44,7 @@ for choice in $choices; do
             sudo apt install -y mariadb-server mariadb-client
             ;;
         5)
-            echo "Installiere Docker & Docker-Compose..."
-            sudo apt install -y docker.io docker-compose
-            sudo systemctl enable --now docker
-            ;;
+            echo Nicht belegt
         6)
             echo "Installiere alle Pakete..."
             sudo apt install -y apache2 samba ubuntu-desktop mariadb-server mariadb-client docker.io docker-compose
