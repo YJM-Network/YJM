@@ -8,11 +8,7 @@ EOF
 
 echo "What do you want to install?"
 echo "1. Server Install"
-echo "2. Rocket Chat install"
-echo "3. Reverse Proxy install"
-echo "4. Nextcloud install"
-echo "5. VirtualBox"
-echo "6. ISOs"
+echo "2. Docker Images"
 echo "7. Webmin"
 
 read -p "Enter your choice (1-7): " choice
@@ -34,11 +30,7 @@ install_script() {
 
 case "$choice" in
     1) install_script "server.sh" ;;
-    2) install_script "r.sh" ;;
-    3) install_script "proxy.sh" ;;
-    4) install_script "cloud.sh" ;;
-    5) install_script "vm.sh" ;;
-    6) install_script "iso.sh" ;;
-    7) install_script "webmin.sh" ;;
+    2) install_script "docker.sh";;
+
     *) echo "Invalid choice. Please enter a number between 1 and 7." ;;
 esac
