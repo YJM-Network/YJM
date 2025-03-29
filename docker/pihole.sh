@@ -15,13 +15,13 @@ echo "services:
     container_name: pihole
     image: pihole/pihole:latest
     ports:
-      - \"53:53/tcp\"
+      - \"5335:53/tcp\"
       - \"53:53/udp\"
-      - \"87:80/tcp\"
-      - \"87:443/tcp\"
+      - \"8442:80/tcp\"
+      - \"8442:443/tcp\"
     environment:
       TZ: 'Europe/London'
-      FTLCONF_webserver_api_password: 'correct horse battery staple'
+      FTLCONF_webserver_api_password: 'admin1222'
     volumes:
       - './etc-pihole:/etc/pihole'
     cap_add:
