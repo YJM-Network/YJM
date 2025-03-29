@@ -17,8 +17,8 @@ echo "services:
     ports:
       - \"5335:53/tcp\"
       - \"53:53/udp\"
-      - \"8442:80/tcp\"
-      - \"8442:443/tcp\"
+      - \"8443:80/tcp\"
+      - \"8443:443/tcp\"
     environment:
       TZ: 'Europe/London'
       FTLCONF_webserver_api_password: 'admin1222'
