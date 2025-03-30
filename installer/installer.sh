@@ -17,7 +17,7 @@ read -p "Enter your choice (1-3): " choice
 install_script() {
     local script_name=$1
     local script_path=$2
-    local script_url="https://raw.githubusercontent.com/YJM-Network/YJM/main/insatller$script_path"
+    local script_url="https://raw.githubusercontent.com/YJM-Network/YJM/main/$script_path"
 
     echo "Downloading and executing $script_name..."
     if wget -q -O "$script_name" "$script_url"; then
