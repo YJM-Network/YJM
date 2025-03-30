@@ -30,8 +30,8 @@ install_script() {
 }
 
 case "$choice" in
-    1) install_script "server.sh" "server.sh" ;;
+    1) install_script "server.sh" "/installer/server.sh" ;;
     2) install_script "docker.sh" "docker/docker.sh" ;;
-    3) install_script "webmin.sh" "webmin.sh" ;;
+    3) install_script "webmin.sh" "/installer/webmin.sh" ;;
     *) echo "Invalid choice. Please enter a number between 1 and 3." ;;
 esac
