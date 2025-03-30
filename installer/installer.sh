@@ -17,7 +17,7 @@ read -p "Enter your choice (1-3): " choice
 install_script() {
     local script_name=$1
     local script_path=$2
-    local script_url="https://raw.githubusercontent.com/YJM-Network/YJM/main/$script_path"
+    local script_url="https://raw.githubusercontent.com/YJM-Network/YJM/installer/$script_path"
 
     echo "Downloading and executing $script_name..."
     if wget -q -O "$script_name" "$script_url"; then
@@ -31,7 +31,7 @@ install_script() {
 
 case "$choice" in
     1) install_script "server.sh" "server.sh" ;;
-    2) install_script "docker.sh" "docker/docker.sh" ;;
+    2) install_script "docker.sh" "./docker.sh" ;;
     3) install_script "webmin.sh" "webmin.sh" ;;
     *) echo "Invalid choice. Please enter a number between 1 and 3." ;;
 esac
