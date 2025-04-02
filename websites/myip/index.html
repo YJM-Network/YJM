@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deine IP-Adressen</title>
+  <style>
+    /* Schwarzer Hintergrund mit leichten lila Akzenten */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(138,43,226,0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(138,43,226,0.1) 0%, transparent 60%);
+      background-size: cover;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .ip-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 1.2rem;
+      position: relative;
+    }
+
+    button.copy-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: rgba(138,43,226,0.7);
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button.copy-btn:hover {
+      background-color: rgba(138,43,226,1);
+    }
+
+    .copied-message {
+      display: none;
+      color: #0f0;
+      margin-top: 5px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Deine IP-Adressen</h1>
+    <div class="ip-box">
+      <p>IPv4: <span id="ipv4">Lade...</span></p>
+      <button class="copy-btn" onclick="copyText('ipv4')">Copy</button>
+      <p id="ipv4-copied" class="copied-message">✅ Automatisch kopiert!</p>
+    </div>
+    <div class="ip-box">
+      <p>IPv6: <span id="ipv6">Lade...</span></p>
+      <button class="copy-btn" onclick="copyText('ipv6')">Copy</button>
+    </div>
+  </div>
+  <script>
+    // Funktion, um die IP-Adresse von einem API-Endpunkt abzurufen und anzuzeigen
+    async function fetchIP(apiUrl, elementId, autoCopy = false) {
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const ipElement = document.getElementById(elementId);
+        ipElement.innerText = data.ip;
+
+        // Falls automatische Kopie gewünscht ist (für IPv4)
+        if (autoCopy) {
+          copyToClipboard(data.ip);
+          document.getElementById('ipv4-copied').style.display = 'block';
+        }
+      } catch (error) {
+        document.getElementById(elementId).innerText = "Fehler beim Laden";
+        console.error(error);
+      }
+    }
+
+    // Abruf der IPv4-Adresse mit automatischem Kopieren
+    fetchIP('https://api.ipify.org?format=json', 'ipv4', true);
+    // Abruf der IPv6-Adresse
+    fetchIP('https://api64.ipify.org?format=json', 'ipv6');
+
+    // Funktion zum Kopieren des Textes in die Zwischenablage
+    function copyText(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      copyToClipboard(text);
+      alert('IP kopiert: ' + text);
+    }
+
+    // Hilfsfunktion zum Kopieren in die Zwischenablage
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).catch(err => console.error('Fehler beim Kopieren', err));
+    }
+  </script>
+</body>
+</html>
+
