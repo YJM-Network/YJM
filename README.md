@@ -17,7 +17,7 @@ Willkommen im offiziellen Repository des **YJM Network**! Hier findest du den Qu
 ## 🛠 Installation & Nutzung
 1. **Repository klonen**
    ```bash
-   git clone https://github.com/deinusername/yjm-network.git
+   git clone https://github.com/YJM-Network/yjm-network.git
    ```
 2. **Abhängigkeiten installieren**
    ```bash
@@ -38,7 +38,7 @@ Wir freuen uns über jede Form der Unterstützung! Wenn du dich beteiligen möch
 
 
 ## 👥 Kontakt
-Bei Fragen oder Anregungen kannst du uns gerne über [GitHub Issues](https://github.com/deinusername/yjm-network/issues) kontaktieren.
+Bei Fragen oder Anregungen kannst du uns gerne über [GitHub Issues](https://github.com/YJM-Network/issues) kontaktieren.
 
 Viel Spaß beim Coden! 🚀
 
