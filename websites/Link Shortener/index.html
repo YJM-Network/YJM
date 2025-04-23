@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Link Shortener</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-papFM8jUR5NwPpqUxfZ7ENCR6r9WCVPqrs2B7+FY8PPM0gk+SUmPbd5ptlW6JTx3FwWT6ZPCEKcrKcOULU9KKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(138,43,226,0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(138,43,226,0.1) 0%, transparent 60%);
+      background-size: cover;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background-color: rgba(0,0,0,0.7);
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      background-color: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 5px;
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.6);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: rgba(138,43,226,0.8);
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: rgba(138,43,226,1);
+    }
+
+    .code-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .code-group input {
+      flex: 1;
+    }
+
+    .code-group button {
+      flex-shrink: 0;
+      width: auto;
+      padding: 10px 15px;
+      margin-top: 25px;
+    }
+
+    .messageBox {
+      display: none;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .messageBox.success {
+      background-color: rgba(0, 255, 0, 0.05);
+      border: 1px solid #0f0;
+      color: #0f0;
+    }
+
+    .messageBox.error {
+      background-color: rgba(255, 0, 0, 0.05);
+      border: 1px solid #f00;
+      color: #f00;
+    }
+
+    #copyButton {
+      margin-top: 10px;
+      background-color: rgba(138,43,226,0.8);
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    #copyButton i {
+      margin-right: 8px;
+    }
+
+    #qrcode {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Link Shortener</h1>
+    <form id="shortenForm">
+      <label for="originalUrl">Originaler Link</label>
+      <input type="url" id="originalUrl" name="originalUrl" placeholder="https://example.com" required>
+
+      <label for="customName">Name</label>
+      <input type="text" id="customName" name="customName" placeholder="z. B. mein-link" required>
+
+      <label for="shortCode">Kurzcode</label>
+      <div class="code-group">
+        <input type="text" id="shortCode" name="shortCode" readonly placeholder="zufällig generiert">
+        <button type="button" id="generateCode">Generieren</button>
+      </div>
+
+      <label for="duration">Gültigkeit</label>
+      <select id="duration" name="duration">
+        <option value="1h">1 Stunde</option>
+        <option value="12h">12 Stunden</option>
+        <option value="24h">24 Stunden</option>
+        <option value="7d">7 Tage</option>
+        <option value="30d">30 Tage</option>
+        <option value="90d">90 Tage</option>
+        <option value="forever">Unbegrenzt</option>
+      </select>
+
+      <button type="submit">Shorten</button>
+    </form>
+
+    <div id="messageBox" class="messageBox">
+      <span id="messageContent"></span>
+      <div id="copyContainer"></div>
+      <div id="qrcode"></div>
+    </div>
+  </div>
+
+  <script>
+    const apiBase = 'https://api.netpurple.net/api/link';
+    const form = document.getElementById('shortenForm');
+    const generateBtn = document.getElementById('generateCode');
+    const shortCodeInput = document.getElementById('shortCode');
+    const messageBox = document.getElementById('messageBox');
+    const messageContent = document.getElementById('messageContent');
+    const copyContainer = document.getElementById('copyContainer');
+    const qrcodeContainer = document.getElementById('qrcode');
+
+    function randomString(length) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    generateBtn.addEventListener('click', () => {
+      shortCodeInput.value = randomString(5);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        originalUrl: form.originalUrl.value,
+        customName: form.customName.value,
+        shortCode: form.shortCode.value,
+        duration: form.duration.value,
+      };
+
+      fetch(apiBase, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(async res => {
+        if (!res.ok) {
+          let msg = 'Fehler beim Kürzen des Links.';
+          if (res.status === 409) msg = 'Kurzcode ist bereits vergeben.';
+          else if (res.status === 400) msg = 'Fehlende oder ungültige Eingabedaten.';
+          else {
+            try {
+              const errData = await res.json();
+              if (errData.error) msg = errData.error;
+            } catch (_) {}
+          }
+          throw new Error(msg);
+        }
+        return res.json();
+      })
+      .then(json => {
+        const shortUrl = `https://link.netpurple.net/${json.shortCode}`;
+        messageBox.className = 'messageBox success';
+        messageContent.innerHTML = `<strong><i class="fas fa-check-circle"></i> Short URL:</strong> <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+        messageBox.style.display = 'block';
+
+        copyContainer.innerHTML = `<button id="copyButton"><i class="fas fa-copy"></i> Kopieren</button>`;
+        document.getElementById('copyButton').addEventListener('click', () => {
+          navigator.clipboard.writeText(shortUrl);
+        });
+
+        qrcodeContainer.innerHTML = '';
+        QRCode.toCanvas(document.createElement('canvas'), shortUrl, function (error, canvas) {
+          if (!error) qrcodeContainer.appendChild(canvas);
+        });
+      })
+      .catch(err => {
+        messageBox.className = 'messageBox error';
+        messageContent.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${err.message}`;
+        messageBox.style.display = 'block';
+        copyContainer.innerHTML = '';
+        qrcodeContainer.innerHTML = '';
+      });
+    });
+  </script>
+</body>
+</html>
