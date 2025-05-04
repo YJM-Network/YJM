@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katzen Webseite – Dark Mode</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Montserrat', sans-serif; background-color: #121212; color: #e0e0e0; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Header */
+    header.site-header {
+      width: 100%; height: 60px;
+      background-color: #000;
+      position: fixed; top: 0; left: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.75);
+      padding: 0 20px;
+      z-index: 100;
+    }
+    .header-nav ul { display: flex; list-style: none; }
+    .header-nav li { margin: 0 20px; }
+    .header-nav a { color: #e0e0e0; font-weight: 600; transition: color 0.3s; }
+    .header-nav a:hover { color: #ff4081; }
+
+    /* Cat-Mode Button */
+    #cat-mode-btn {
+      background: #ff4081;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    #cat-mode-btn:hover {
+      background: #e03570;
+      transform: scale(1.05);
+    }
+
+    /* Hero */
+    .hero { padding: 100px 20px 60px; text-align: center; background-color: #1e1e1e; }
+    .hero h1 { font-size: 2.5rem; color: #fff; }
+
+    /* Sidebar Dots */
+    .navbar { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); z-index: 101; }
+    .navbar ul { list-style: none; }
+    .navbar .dot { display: block; width: 14px; height: 14px; margin: 12px 0; border-radius: 50%; background: #555; cursor: pointer; transition: background 0.3s; }
+    .navbar .dot:hover, .navbar .dot.active { background: #ff4081; }
+
+    /* Gallery */
+    .gallery { padding: 60px 20px; text-align: center; background-color: #121212; }
+    .gallery h2 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
+    .slideshow-container { position: relative; max-width: 800px; height: 450px; margin: 0 auto; overflow: hidden; }
+    .slideshow-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+    .prev, .next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      font-size: 2rem; color: #fff; padding: 8px; cursor: pointer;
+      background: rgba(0,0,0,0.5); border-radius: 50%;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+    .dots-container { margin-top: 12px; }
+    .dots-container .dot { display: inline-block; width: 12px; height: 12px; margin: 0 6px; border-radius: 50%; background: #444; cursor: pointer; transition: background 0.3s; }
+    .dots-container .dot.active { background: #ff4081; }
+
+    /* Timeline */
+    .timeline { padding: 60px 20px; background-color: #1e1e1e; }
+    .timeline h2 { font-size: 1.8rem; color: #fff; text-align: center; margin-bottom: 40px; }
+    .timeline-container { position: relative; max-width: 600px; margin: 0 auto; }
+    .timeline-container::before {
+      content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 4px; background: #222; transform: translateX(-50%);
+    }
+    .timeline-item { position: relative; width: 50%; padding: 20px 40px; }
+    .timeline-item:nth-child(odd) { left: 0; text-align: right; }
+    .timeline-item:nth-child(even) { left: 50%; }
+    .timeline-item::before {
+      content: ''; position: absolute; top: 24px; width: 16px; height: 16px;
+      border-radius: 50%; background: #ff4081; border: 4px solid #121212;
+    }
+    .timeline-item:nth-child(odd)::before { right: -8px; }
+    .timeline-item:nth-child(even)::before { left: -8px; }
+    .date { font-weight: 600; color: #ff4081; margin-bottom: 8px; }
+    .content { background: #222; padding: 12px; border-radius: 4px; }
+
+    /* Vorteile & Nachteile */
+    .vorteile { padding: 60px 20px; background-color: #121212; }
+    .vorteile h2 { font-size: 2rem; color: #fff; text-align: center; margin-bottom: 20px; }
+    .vorteile-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1000px; margin: 0 auto; }
+
+    .features-box, .disadvantages-box {
+      flex: 1 1 400px; padding: 20px; border: 2px solid #ff4081;
+      border-radius: 8px; min-height: 280px; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .features-box {
+      background: linear-gradient(135deg, #ff4081 0%, #ff79a1 100%);
+      color: #fff; box-shadow: 0 0 20px rgba(255,64,129,0.7); transform: scale(1.05);
+    }
+    .features-box:hover { transform: scale(1.1); }
+    .features-box h3, .disadvantages-box h3 {
+      margin-bottom: 12px; color: #fff; font-size: 1.2rem;
+    }
+    .features-box ul { list-style: none; padding-left: 0; }
+    .features-box li { margin-bottom: 10px; display: flex; align-items: center; }
+    .features-box li::before { content: '✔️'; margin-right: 10px; }
+    .disadvantages-box {
+      background: transparent; color: #e0e0e0;
+    }
+    .disadvantages-box p { margin: 0; }
+
+    /* Pflege-Tipps Box */
+    .pflegetipps {
+      max-width: 1000px; margin: 40px auto; background: #222;
+      padding: 20px; border-radius: 8px;
+    }
+    .pflegetipps h3 { color: #ff4081; margin-bottom: 12px; text-align: center; }
+    .pflegetipps ul { list-style: none; padding-left: 0; }
+    .pflegetipps li { margin-bottom: 8px; padding-left: 20px; position: relative; }
+    .pflegetipps li::before { content: '🧶'; position: absolute; left: 0; }
+
+    /* Cat-Mode Overlay */
+    #cat-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85); display: none;
+      align-items: center; justify-content: center; z-index: 999;
+      flex-direction: column; color: #fff; text-align: center;
+    }
+    #cat-overlay img {
+      max-width: 90%; max-height: 80%;
+      border: 5px solid #ff4081; border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    #cat-overlay .close-btn {
+      background: #ff4081; border: none; color: #fff;
+      padding: 10px 16px; font-size: 1rem; border-radius: 4px;
+      cursor: pointer; transition: background 0.3s;
+    }
+    #cat-overlay .close-btn:hover { background: #e03570; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="header-nav">
+      <ul>
+        <li><a href="#gallery">Bilder</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#vorteile">Katzen Vorteile</a></li>
+      </ul>
+    </nav>
+    <button id="cat-mode-btn">Cat-Mode 🐱</button>
+  </header>
+
+  <!-- Sidebar Navigation Dots -->
+  <nav class="navbar">
+    <ul>
+      <li><span class="dot active" data-target="hero"></span></li>
+      <li><span class="dot" data-target="gallery"></span></li>
+      <li><span class="dot" data-target="timeline"></span></li>
+      <li><span class="dot" data-target="vorteile"></span></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <h1>KATZEN SIND DAS BESTE DER WELT ❤️😺</h1>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="gallery">
+    <h2>KATZEN BILDER</h2>
+    <div class="slideshow-container">
+      <div class="prev" onclick="changeSlide(-1)">&#10094;</div>
+      <img id="slide-img"
+           src="https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+           alt="Süße Katze">
+      <div class="next" onclick="changeSlide(1)">&#10095;</div>
+    </div>
+    <div class="dots-container">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section id="timeline" class="timeline">
+    <h2>Katzenanschaffungs-Timeline</h2>
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <div class="date">15.04.2025</div>
+        <div class="content">Entscheidung zur Adoption von Katzen</div>
+      </div>
+      <div class="timeline-item">
+        <div class="date">Coming soon</div>
+        <div class="content">Coming soon</div>
+      </div>
+      <div class="timeline-item">
+        <div class="date">Coming soon</div>
+        <div class="content">Coming soon</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vorteile & Nachteile -->
+  <section id="vorteile" class="vorteile">
+    <h2>Katzen Vorteile & Nachteile</h2>
+    <div class="vorteile-container">
+      <div class="features-box">
+        <h3>Vorteile</h3>
+        <ul>
+          <li>Entspannung und Stressabbau</li>
+          <li>Unabhängige, saubere Mitbewohner</li>
+          <li>Verspielte und unterhaltsame Begleiter</li>
+          <li>Verbessern Herzgesundheit</li>
+          <li>Fördern Bewegung und Aktivität</li>
+          <li>Erhöhen soziale Interaktion</li>
+          <li>Gesteigertes Wohlbefinden</li>
+        </ul>
+      </div>
+      <div class="disadvantages-box">
+        <h3>Nachteile</h3>
+        <p>Keine.</p>
+      </div>
+    </div>
+    <div class="pflegetipps">
+      <h3>Pflege-Tipps für Kitten</h3>
+      <ul>
+        <li>Regelmäßiges sanftes Bürsten</li>
+        <li>Ausgewogenes Kitten-Futter anbieten</li>
+        <li>Frisches Wasser stets bereitstellen</li>
+        <li>Saubere Katzentoilette gewährleisten</li>
+        <li>Frühzeitige Tierarztbesuche planen</li>
+        <li>Spielzeit und soziale Interaktion fördern</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Cat-Mode Overlay -->
+  <div id="cat-overlay">
+    <img src="https://images.pexels.com/photos/1276553/pexels-photo-1276553.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Süße Katze">
+    <button class="close-btn">Schließen</button>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Smooth scroll & active dots
+    document.querySelectorAll('.header-nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(link.getAttribute('href'))
+                .scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    document.querySelectorAll('.navbar .dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        document.getElementById(dot.dataset.target)
+                .scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    window.addEventListener('scroll', () => {
+      ['hero','gallery','timeline','vorteile'].forEach(id => {
+        const rect = document.getElementById(id).getBoundingClientRect();
+        const dot  = document.querySelector(`.navbar .dot[data-target="${id}"]`);
+        if (rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    });
+
+    // Slideshow
+    const images = [
+      'https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      'https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      'https://www.pexels.com/de-de/foto/kurzbeschichtete-graue-katze-20787/'
+    ];
+    let currentIndex = 0;
+    const slideImg  = document.getElementById('slide-img');
+    const thumbDots = document.querySelectorAll('.dots-container .dot');
+    function changeSlide(dir) {
+      currentIndex = (currentIndex + dir + images.length) % images.length;
+      updateSlide();
+    }
+    function updateSlide() {
+      slideImg.src = images[currentIndex];
+      thumbDots.forEach(d => d.classList.remove('active'));
+      thumbDots[currentIndex].classList.add('active');
+    }
+    thumbDots.forEach(d => {
+      d.addEventListener('click', () => {
+        currentIndex = parseInt(d.dataset.index);
+        updateSlide();
+      });
+    });
+    setInterval(() => changeSlide(1), 6000);
+
+    // Cat-Mode sounds for 30s
+    const btn = document.getElementById('cat-mode-btn');
+    const overlay = document.getElementById('cat-overlay');
+    const closeBtn = overlay.querySelector('.close-btn');
+
+    const meowFiles = [
+      '/sounds/1.mp3',
+      '/sounds/2.mp3',
+      '/sounds/3.mp3',
+      '/sounds/4.mp3',
+      '/sounds/5.mp3',
+      '/sounds/6.mp3',
+      '/sounds/7.mp3',
+      '/sounds/8.mp3'
+    ];
+    let meowAudios = meowFiles.map(src => {
+      const a = new Audio(src);
+      a.loop = true;
+      return a;
+    });
+    let meowTimeout;
+
+    btn.addEventListener('click', () => {
+      overlay.style.display = 'flex';
+      meowAudios.forEach(aud => { aud.currentTime = 0; aud.play(); });
+      meowTimeout = setTimeout(() => {
+        meowAudios.forEach(aud => { aud.pause(); aud.currentTime = 0; });
+      }, 30000);
+    });
+
+    closeBtn.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      clearTimeout(meowTimeout);
+      meowAudios.forEach(aud => { aud.pause(); aud.currentTime = 0; });
+    });
+  </script>
+</body>
+</html>
