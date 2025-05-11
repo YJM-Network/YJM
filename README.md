@@ -1,44 +1,41 @@
+````markdown
 # YJM Network Repository
 
-Willkommen im offiziellen Repository des **YJM Network**! Hier findest du den Quellcode sowie die Services und Programme des **YJM Hub**. Dieses Repository dient als zentrale Anlaufstelle für Entwickler, die mit dem YJM Network arbeiten oder sich daran beteiligen möchten.
+Willkommen im offiziellen Repository des **YJM Network**! Dieses Repository ist die zentrale Anlaufstelle für den **YJM Hub**, das Frontend-Portal des YJM Networks, sowie unterstützende Skripte und Bots.
 
 ## 📂 Inhalte dieses Repositorys
-- **Netzwerk-Services**: Code für verschiedene YJM-Netzwerkdienste
-- **Programme & Tools**: Softwareanwendungen, die im YJM Hub genutzt werden
-- **APIs & Schnittstellen**: Zugriff auf externe und interne Services
-- **Dokumentationen**: Anleitungen zur Nutzung und Entwicklung
+- **Frontend-Code**: Moderne Web-Anwendungen für den YJM Hub (HTML, CSS, JavaScript/TypeScript, React)
+- **Bash-Skripte**: Automatisierungstools und Deployment-Skripte
+- **Discord-Bots**:
+  - **Python**: Bots geschrieben in Python (discord.py)
+  - **Node.js**: Bots geschrieben in Node.js (discord.js)
+- **APIs & Schnittstellen**: Dokumentation und Beispielaufrufe für interne und externe Services
+- **Dokumentationen**: Anleitungen zur Nutzung und Entwicklung im YJM Hub
 
 ## 🌟 Features
-- Open-Source-Module für den einfachen Einstieg
-- Skalierbare und erweiterbare Architektur
-- Regelmäßige Updates und Verbesserungen
-- Community-Support und Mitwirkungsmöglichkeiten
+- **Modulares Frontend**: Wiederverwendbare Komponenten in React
+- **Automatisierung**: Einfaches Deployment und Maintenance mit Bash-Skripten
+- **Community-Bots**: Erweiterbare Discord-Bots zur Integration und Verwaltung
+- **Skalierbare Architektur**: Leicht erweiterbar für zukünftige Anforderungen
+- **Open Source**: Beiträge sind willkommen!
 
-## 🛠 Installation & Nutzung
-1. **Repository klonen**
-   ```bash
-   git clone https://github.com/YJM-Network/yjm-network.git
-   ```
-2. **Abhängigkeiten installieren**
-   ```bash
-   cd yjm-network
-   npm install  # oder pip install -r requirements.txt (je nach Technologie)
-   ```
-3. **Service starten**
-   ```bash
-   npm start  # oder python app.py
-   ```
+
+
+
 
 ## 🔧 Mitwirken
-Wir freuen uns über jede Form der Unterstützung! Wenn du dich beteiligen möchtest:
+
+Wir freuen uns über jede Form der Unterstützung!
+
 1. Erstelle einen Fork des Repositorys
-2. Implementiere deine Änderungen
-3. Stelle eine Pull-Request
-
-
+2. Implementiere deine Änderungen in deinem Branch
+3. Erstelle eine Pull-Request gegen den `main`-Branch
 
 ## 👥 Kontakt
-Bei Fragen oder Anregungen kannst du uns gerne über [GitHub Issues](https://github.com/YJM-Network/issues) kontaktieren.
+
+Bei Fragen oder Anregungen nutze bitte unser [GitHub Issues](https://github.com/YJM-Network/issues) Board.
 
 Viel Spaß beim Coden! 🚀
 
+```
+```
