@@ -1,41 +1,21 @@
-````markdown
-# YJM Network Repository
+# YJM Network Hub – Frontend & Tools Repository
 
-Willkommen im offiziellen Repository des **YJM Network**! Dieses Repository ist die zentrale Anlaufstelle für den **YJM Hub**, das Frontend-Portal des YJM Networks, sowie unterstützende Skripte und Bots.
+Willkommen im offiziellen **Frontend- und Tools-Repository** des **YJM Network**!  
+Dieses Repository enthält den Quellcode für den **YJM Hub**, ein zentrales Interface des Netzwerks, sowie ergänzende Tools wie Bash-Skripte und Discord-Bots.
 
 ## 📂 Inhalte dieses Repositorys
-- **Frontend-Code**: Moderne Web-Anwendungen für den YJM Hub (HTML, CSS, JavaScript/TypeScript, React)
-- **Bash-Skripte**: Automatisierungstools und Deployment-Skripte
-- **Discord-Bots**:
-  - **Python**: Bots geschrieben in Python (discord.py)
-  - **Node.js**: Bots geschrieben in Node.js (discord.js)
-- **APIs & Schnittstellen**: Dokumentation und Beispielaufrufe für interne und externe Services
-- **Dokumentationen**: Anleitungen zur Nutzung und Entwicklung im YJM Hub
+
+- **Frontend-Code**: Webanwendungen und Benutzeroberflächen des YJM Hubs (z. B. mit React, Vue oder Next.js)
+- **Bash-Skripte**: Automatisierungen und Wartungstools für das YJM Network
+- **Discord-Bots**: Bots in **Python** (z. B. `discord.py`) und **Node.js** (z. B. `discord.js`) zur Community-Interaktion
+- **APIs & Schnittstellen**: Frontend-nahe API-Integrationen und Kommunikationsschnittstellen
+- **Dokumentationen**: Hilfestellungen zur Installation, Nutzung und Erweiterung
 
 ## 🌟 Features
-- **Modulares Frontend**: Wiederverwendbare Komponenten in React
-- **Automatisierung**: Einfaches Deployment und Maintenance mit Bash-Skripten
-- **Community-Bots**: Erweiterbare Discord-Bots zur Integration und Verwaltung
-- **Skalierbare Architektur**: Leicht erweiterbar für zukünftige Anforderungen
-- **Open Source**: Beiträge sind willkommen!
 
+- Moderne, modulare Frontend-Architektur
+- Skripte und Tools für DevOps und Automatisierung
+- Integration von Community-Funktionen über Discord-Bots
+- Quelloffen, wartbar und auf Mitwirkung ausgelegt
+- Regelmäßige Updates und Weiterentwicklungen
 
-
-
-
-## 🔧 Mitwirken
-
-Wir freuen uns über jede Form der Unterstützung!
-
-1. Erstelle einen Fork des Repositorys
-2. Implementiere deine Änderungen in deinem Branch
-3. Erstelle eine Pull-Request gegen den `main`-Branch
-
-## 👥 Kontakt
-
-Bei Fragen oder Anregungen nutze bitte unser [GitHub Issues](https://github.com/YJM-Network/issues) Board.
-
-Viel Spaß beim Coden! 🚀
-
-```
-```
