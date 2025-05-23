@@ -104,7 +104,7 @@ install_docker_image() {
         7) 
            echo "Downlaoding Apache2 skript"
            skript_url="https://raw.githubusercontent.com/YJM-Network/YJM/refs/heads/main/docker/apache2.sh" 
-           wget -q -O apache2.sh
+           wget -q -O apache2.sh "$srkipt_url"
            sudo chmod +x apache2.sh
            sudo dos2unix apache2.sh
            sudo ./apache2.sh
