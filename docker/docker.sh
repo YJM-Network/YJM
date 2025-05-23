@@ -14,8 +14,9 @@ echo "3. Pi-hole"
 echo "4. Proxy (Nginx)"
 echo "5. Portainer"
 echo "6. Nextcloud"
+echo "7. Apache2"
 
-read -p "Enter your choice (1-6): " docker_choice
+read -p "Enter your choice (1-7): " docker_choice
 
 # Funktion zur Überprüfung, ob ein Befehl existiert
 command_exists() {
@@ -99,8 +100,20 @@ install_docker_image() {
             sudo ./cloud.sh
             echo "Nextcloud installation completed."
             ;;
+
+        7) 
+           echo "Downlaoding Apache2 skript"
+           skript_url="https://raw.githubusercontent.com/YJM-Network/YJM/refs/heads/main/docker/apache2.sh" 
+           wget -q -O apache2.sh
+           sudo chmod +x apache2.sh
+           sudo dos2unix apache2.sh
+           sudo ./apache2.sh
+           echo "Apache2 Installiert"
+           ;;
+
+        
         *)
-            echo "Invalid choice. Please enter a number between 1 and 6."
+            echo "Invalid choice. Please enter a number between 1 and 7."
             ;;
     esac
 }
